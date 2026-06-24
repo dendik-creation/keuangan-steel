@@ -177,14 +177,5 @@ if (btnCari) {
   });
 }
 
-// Setup logout button
-const logoutBtn = document.getElementById('logout-btn');
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    logout();
-  });
-}
-
 // Load on page load
 document.addEventListener('DOMContentLoaded', loadTransaksi);
