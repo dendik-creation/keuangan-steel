@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi Manajemen Keuangan Pribadi</title>
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+  <%- include('partials/navbar-auth', { active: '' }) %>
+
+  <main class="container">
+    <div class="auth-container">
+      <div class="auth-box">
+        <h2>Selamat Datang</h2>
+        <p style="text-align: center; margin-bottom: 2rem; color: #666;">
+          Aplikasi Manajemen Keuangan Pribadi membantu Anda mengelola keuangan dengan lebih baik.
+        </p>
+        <div style="display: flex; gap: 1rem; flex-direction: column;">
+          <a href="/login" class="btn btn-primary">Login</a>
+          <a href="/register" class="btn btn-secondary">Register</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    // Redirect to dashboard if already logged in
+    fetch('/api/auth/user')
+      .then(response => {
+        if (response.ok) {
+          window.location.href = '/dashboard';
+        }
+      })
+      .catch(err => console.log('User tidak login'));
+  </script>
+</body>
+</html>
+

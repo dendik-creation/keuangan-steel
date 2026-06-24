@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Aplikasi Manajemen Keuangan</title>
+  <link rel="stylesheet" href="/styles/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <%- include('partials/navbar', { active: 'dashboard' }) %>
+
+  <main class="container dashboard-container">
+    <h2>Dashboard Keuangan</h2>
+
+    <div class="summary-cards">
+      <div class="card card-income">
+        <h3>Total Pemasukan</h3>
+        <p class="amount" id="total-income">Rp 0</p>
+      </div>
+      <div class="card card-expense">
+        <h3>Total Pengeluaran</h3>
+        <p class="amount" id="total-expense">Rp 0</p>
+      </div>
+      <div class="card card-balance">
+        <h3>Saldo</h3>
+        <p class="amount" id="balance">Rp 0</p>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Grafik Keuangan Bulanan</h3>
+      <canvas id="chart"></canvas>
+    </div>
+
+    <div class="recent-transactions">
+      <h3>Transaksi Terbaru</h3>
+      <table id="recent-table">
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Keterangan</th>
+            <th>Jenis</th>
+            <th>Jumlah</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script src="/scripts/auth.js"></script>
+  <script src="/scripts/dashboard.js"></script>
+</body>
+</html>
+

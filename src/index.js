@@ -5,6 +5,8 @@ const path = require('path');
 const session = require('express-session');
 
 const routes = require('./routes');
+// pages routes (EJS templates)
+const pagesRoutes = require('./routes/pages');
 
 const app = express();
 
@@ -23,10 +25,16 @@ app.use(session({
   }
 }));
 
-app.use(express.static(path.join(__dirname, 'public/pages')));
+// View engine (EJS)
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Static assets
 app.use('/styles', express.static(path.join(__dirname, 'public/styles')));
 app.use('/scripts', express.static(path.join(__dirname, 'public/scripts')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', routes);
+app.use('/', pagesRoutes);
 
 const port = process.env.PORT || 3000;
 

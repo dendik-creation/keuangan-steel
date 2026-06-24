@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kelola Transaksi - Aplikasi Manajemen Keuangan</title>
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+  <%- include('partials/navbar', { active: 'transaksi' }) %>
+
+  <main class="container transaksi-container">
+    <h2>Kelola Transaksi</h2>
+
+    <div class="form-section">
+      <h3 id="form-title">Tambah Transaksi</h3>
+      <form id="form-transaksi">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="jenis">Jenis:</label>
+            <select id="jenis" required>
+              <option value="">Pilih Jenis</option>
+              <option value="pemasukan">Pemasukan</option>
+              <option value="pengeluaran">Pengeluaran</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tanggal">Tanggal:</label>
+            <input type="date" id="tanggal" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="keterangan">Keterangan:</label>
+            <input type="text" id="keterangan" placeholder="Masukkan keterangan" required>
+          </div>
+          <div class="form-group">
+            <label for="jumlah">Jumlah:</label>
+            <input type="number" id="jumlah" placeholder="Masukkan jumlah" min="1" required>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="reset" class="btn btn-secondary" id="reset-btn">Reset</button>
+        </div>
+        <div id="form-message" class="form-message"></div>
+      </form>
+    </div>
+
+    <div class="filter-section">
+      <input type="text" id="cari" placeholder="Cari transaksi...">
+      <button type="button" class="btn btn-primary" id="btn-cari">Cari</button>
+    </div>
+
+    <div class="transactions-section">
+      <h3>Daftar Transaksi</h3>
+      <table id="tabel-transaksi">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Tanggal</th>
+            <th>Keterangan</th>
+            <th>Jenis</th>
+            <th>Jumlah</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script src="/scripts/auth.js"></script>
+  <script src="/scripts/transaksi.js"></script>
+</body>
+</html>
+
