@@ -96,7 +96,7 @@ async function loadDashboard() {
       
       row.insertCell(0).textContent = tanggal;
       row.insertCell(1).textContent = t.keterangan;
-      row.insertCell(2).textContent = t.jenis === 'pemasukan' ? 'Pemasukan' : 'Pengeluaran';
+      row.insertCell(2).textContent = t.jenis === 'Pemasukan' ? 'Pemasukan' : 'Pengeluaran';
       row.insertCell(3).textContent = 'Rp ' + parseFloat(t.jumlah).toLocaleString('id-ID');
     });
   } catch (error) {
