@@ -10,8 +10,8 @@ router.get('/summary', async (req, res) => {
 
     const [rows] = await db.query(`
       SELECT 
-        SUM(CASE WHEN jenis = 'pemasukan' THEN jumlah ELSE 0 END) AS totalIncome,
-        SUM(CASE WHEN jenis = 'pengeluaran' THEN jumlah ELSE 0 END) AS totalExpense
+        SUM(CASE WHEN jenis = 'Pemasukan' THEN jumlah ELSE 0 END) AS totalIncome,
+        SUM(CASE WHEN jenis = 'Pengeluaran' THEN jumlah ELSE 0 END) AS totalExpense
       FROM transaksi
       WHERE user_id = ?
     `, [userId]);
@@ -42,8 +42,8 @@ router.get('/chart', async (req, res) => {
     const [rows] = await db.query(`
       SELECT 
         MONTH(tanggal) AS bulan,
-        SUM(CASE WHEN jenis='pemasukan' THEN jumlah ELSE 0 END) AS income,
-        SUM(CASE WHEN jenis='pengeluaran' THEN jumlah ELSE 0 END) AS expense
+        SUM(CASE WHEN jenis='Pemasukan' THEN jumlah ELSE 0 END) AS income,
+        SUM(CASE WHEN jenis='Pengeluaran' THEN jumlah ELSE 0 END) AS expense
       FROM transaksi
       WHERE user_id = ?
       GROUP BY MONTH(tanggal)

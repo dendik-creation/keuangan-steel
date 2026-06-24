@@ -237,8 +237,8 @@ exports.getFinancialSummary = async (req, res) => {
   try {
     const [summary] = await db.query(`
       SELECT 
-        COALESCE(SUM(CASE WHEN jenis = 'pemasukan' THEN jumlah ELSE 0 END), 0) as totalIncome,
-        COALESCE(SUM(CASE WHEN jenis = 'pengeluaran' THEN jumlah ELSE 0 END), 0) as totalExpense
+        COALESCE(SUM(CASE WHEN jenis = 'Pemasukan' THEN jumlah ELSE 0 END), 0) as totalIncome,
+        COALESCE(SUM(CASE WHEN jenis = 'Pengeluaran' THEN jumlah ELSE 0 END), 0) as totalExpense
       FROM transaksi t
       LEFT JOIN kategori k ON t.id_kategori = k.id_kategori
       WHERE t.id_user = ?
@@ -271,8 +271,8 @@ exports.getMonthlyReport = async (req, res) => {
     let query = `
       SELECT 
         DATE_FORMAT(tanggal, '%Y-%m') as bulan,
-        COALESCE(SUM(CASE WHEN jenis = 'pemasukan' THEN jumlah ELSE 0 END), 0) as totalIncome,
-        COALESCE(SUM(CASE WHEN jenis = 'pengeluaran' THEN jumlah ELSE 0 END), 0) as totalExpense
+        COALESCE(SUM(CASE WHEN jenis = 'Pemasukan' THEN jumlah ELSE 0 END), 0) as totalIncome,
+        COALESCE(SUM(CASE WHEN jenis = 'Pengeluaran' THEN jumlah ELSE 0 END), 0) as totalExpense
       FROM transaksi t
       LEFT JOIN kategori k ON t.id_kategori = k.id_kategori
       WHERE t.id_user = ?
@@ -317,8 +317,8 @@ exports.getChartData = async (req, res) => {
     const [data] = await db.query(`
       SELECT 
         DATE_FORMAT(tanggal, '%Y-%m') as bulan,
-        COALESCE(SUM(CASE WHEN jenis = 'pemasukan' THEN jumlah ELSE 0 END), 0) as income,
-        COALESCE(SUM(CASE WHEN jenis = 'pengeluaran' THEN jumlah ELSE 0 END), 0) as expense
+        COALESCE(SUM(CASE WHEN jenis = 'Pemasukan' THEN jumlah ELSE 0 END), 0) as income,
+        COALESCE(SUM(CASE WHEN jenis = 'Pengeluaran' THEN jumlah ELSE 0 END), 0) as expense
       FROM transaksi t
       LEFT JOIN kategori k ON t.id_kategori = k.id_kategori
       WHERE t.id_user = ?
