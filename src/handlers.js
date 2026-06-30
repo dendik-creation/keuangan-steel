@@ -68,10 +68,16 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: 'Email atau password salah' });
     }
     
-    // Set session
-    req.session.userId = user.id_user;
-    req.session.nama = user.nama;
-    req.session.email = user.email;
+  // Set session
+req.session.user = {
+  id: user.id_user,
+  nama: user.nama,
+  email: user.email
+};
+
+req.session.userId = user.id_user;
+req.session.nama = user.nama;
+req.session.email = user.email;
     
     res.json({ 
       message: 'Login berhasil',

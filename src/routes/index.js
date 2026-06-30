@@ -1,6 +1,19 @@
 const express = require('express');
-const router = express.Router();
+const app = express();
 
-router.use('/dashboard', require('./dashboard'));
+app.use(express.json());
+app.use(express.urlencoded({
+    extended:true
+}));
 
-module.exports = router;
+
+const authRoutes = require('./routes/auth');
+
+app.use('/api/auth', authRoutes);
+
+
+app.listen(3000,()=>{
+    console.log(
+        "Server running http://localhost:3000"
+    );
+});
