@@ -130,7 +130,7 @@ KEUANGAN/
 
 ##  Pembagian Tugas Tim
 
-## Anggota 1 — Frontend & UI/UX (manda)
+## Anggota 1 — Frontend & UI/UX (Amanda Putri Cahyani-202451167)
 ### Tugas
 * Mendesain tampilan website.
 * Membuat halaman:
@@ -144,7 +144,7 @@ KEUANGAN/
 * Membuat CSS responsif.
 * Membuat navbar dan footer.
 
-# Anggota 2 — Backend Autentikasi (Intan)
+# Anggota 2 — Backend Autentikasi (Gandhys Intan Sawitri-202451172)
 ### Tugas
 Membuat sistem:
 
@@ -154,7 +154,7 @@ Membuat sistem:
 * Session
 * Middleware autentikasi
 
-# Anggota 3 — CRUD Transaksi (Ainn)
+# Anggota 3 — CRUD Transaksi (Nur Qurrotu Ain-202451158)
 ### Tugas
 Mengelola transaksi:
 
@@ -164,7 +164,7 @@ Mengelola transaksi:
 * Hapus transaksi
 * Menampilkan transaksi pengguna
 
-# Anggota 4 — Dashboard, Grafik, dan Laporan (Ghina)
+# Anggota 4 — Dashboard, Grafik, dan Laporan (Ghina Fadhila Rahmah-292451166)
 ### Tugas
 Membuat:
 * Ringkasan keuangan
@@ -239,11 +239,11 @@ http://localhost:3000
 ### User 1
 
 * Username: AnakPutra
-* Password: 13579
+* Password: 12345
 
 ### User 2
 
 * Username: AnakPutri
-* Password: 246810
+* Password: 67890
 
 ---
