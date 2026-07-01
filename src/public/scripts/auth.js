@@ -33,27 +33,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 const response = await fetch(
-                    "/api/auth/register",
-                    {
+    "/api/auth/register",
+    {
 
-                        method:"POST",
+        method:"POST",
 
-                        headers:{
-                            "Content-Type":"application/json"
-                        },
+        headers:{
+            "Content-Type":"application/json"
+        },
 
 
-                        body:JSON.stringify({
+        body:JSON.stringify({
 
-                            nama:nama,
-                            email:email,
-                            password:password
+            nama:nama,
+            email:email,
+            password:password,
+            confirmPassword:confirmPassword
 
-                        })
+        })
 
-                    }
-                );
-
+    }
+);
 
                 const data = await response.json();
 
