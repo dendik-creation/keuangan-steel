@@ -103,10 +103,14 @@ async function deleteTransaksi(id) {
 }
 
 function showMessage(message, type) {
+  if(!formMessage){
+    console.log(message);
+    return;
+  }
+
   formMessage.textContent = message;
   formMessage.className = `form-message ${type}`;
   formMessage.style.display = 'block';
-  
   setTimeout(() => {
     formMessage.style.display = 'none';
   }, 3000);
