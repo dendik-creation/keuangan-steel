@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const handlers = require('../../handlers'); 
+const handlers = require('../handlers'); 
 
 // Rute CRUD Kategori
 router.get('/', handlers.daftarKategori);         // READ

@@ -1,8 +1,8 @@
 // src/routes/transaksi.js
 const express = require('express');
 const router = express.Router();
-// Import handlers (pastikan path-nya benar, mundur 2 folder ke root)
-const handlers = require('../../handlers'); 
+// Import handlers (pastikan path-nya benar, mundur 1 folder ke src)
+const handlers = require('../handlers'); 
 
 // Definisikan rute CRUD
 router.get('/', handlers.daftarTransaksi);          // READ
