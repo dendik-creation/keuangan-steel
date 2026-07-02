@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
-const session = require('express-session');
+const session = require('cookie-session');
 
 const routes = require('./routes');
 // pages routes (EJS templates)
@@ -14,15 +14,11 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Session management - Anggota 2
+// Session management - Anggota 2 (Cookie-based session for Vercel/serverless compatibility)
 app.use(session({
-  secret: 'your_secret_key_here',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { 
-    secure: false, // Set true jika menggunakan HTTPS
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
+  name: 'session',
+  keys: ['your_secret_key_here_shh_123'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
 
 // View engine (EJS)

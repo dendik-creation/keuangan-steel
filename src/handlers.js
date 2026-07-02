@@ -67,17 +67,25 @@ exports.login = async (req, res) => {
     req.session.nama = user.nama;
     req.session.email = user.email;
     
-    // Explicitly save session to prevent race conditions on subsequent requests
-    req.session.save((err) => {
-      if (err) {
-        console.error('Session save error:', err);
-        return res.status(500).json({ error: 'Gagal menyimpan session' });
-      }
+    // Explicitly save session if the method exists (express-session)
+    if (req.session.save) {
+      req.session.save((err) => {
+        if (err) {
+          console.error('Session save error:', err);
+          return res.status(500).json({ error: 'Gagal menyimpan session' });
+        }
+        res.json({ 
+          message: 'Login berhasil',
+          user: { id: user.id_user, nama: user.nama, email: user.email }
+        });
+      });
+    } else {
+      // cookie-session writes synchronously on response end
       res.json({ 
         message: 'Login berhasil',
         user: { id: user.id_user, nama: user.nama, email: user.email }
       });
-    });
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Kesalahan server internal' });
@@ -85,13 +93,19 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({ error: 'Gagal logout' });
-    }
-    res.clearCookie('connect.sid');
+  if (req.session && req.session.destroy) {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ error: 'Gagal logout' });
+      }
+      res.clearCookie('connect.sid');
+      res.json({ message: 'Logout berhasil' });
+    });
+  } else {
+    req.session = null;
+    res.clearCookie('session');
     res.json({ message: 'Logout berhasil' });
-  });
+  }
 };
 
 exports.getCurrentUser = (req, res) => {
