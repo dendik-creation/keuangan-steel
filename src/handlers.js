@@ -56,20 +56,27 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: 'Email atau password salah' });
     }
     
-  // Set session
-req.session.user = {
-  id: user.id_user,
-  nama: user.nama,
-  email: user.email
-};
+    // Set session
+    req.session.user = {
+      id: user.id_user,
+      nama: user.nama,
+      email: user.email
+    };
 
-req.session.userId = user.id_user;
-req.session.nama = user.nama;
-req.session.email = user.email;
+    req.session.userId = user.id_user;
+    req.session.nama = user.nama;
+    req.session.email = user.email;
     
-    res.json({ 
-      message: 'Login berhasil',
-      user: { id: user.id_user, nama: user.nama, email: user.email }
+    // Explicitly save session to prevent race conditions on subsequent requests
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res.status(500).json({ error: 'Gagal menyimpan session' });
+      }
+      res.json({ 
+        message: 'Login berhasil',
+        user: { id: user.id_user, nama: user.nama, email: user.email }
+      });
     });
   } catch (err) {
     console.error(err);
@@ -82,6 +89,7 @@ exports.logout = (req, res) => {
     if (err) {
       return res.status(500).json({ error: 'Gagal logout' });
     }
+    res.clearCookie('connect.sid');
     res.json({ message: 'Logout berhasil' });
   });
 };
@@ -223,20 +231,28 @@ exports.editTransaksi = async (req, res) => {
   }
 
   try {
-
     // cari kategori berdasarkan jenis
-    const [kategori] = await db.query(
+    let [kategori] = await db.query(
       "SELECT id_kategori FROM kategori WHERE jenis = ? LIMIT 1",
       [jenis]
     );
+    let idKategori;
+    if (kategori.length > 0) {
+      idKategori = kategori[0].id_kategori;
+    } else {
+      // jika kategori belum ada, buat otomatis
+      const namaKategori =
+        jenis === "Pemasukan"
+        ? "Umum Pemasukan"
+        : "Umum Pengeluaran";
 
-    if(kategori.length === 0){
-      return res.status(400).json({
-        error:"Kategori tidak ditemukan"
-      });
+      const [hasil] = await db.query(
+        'INSERT INTO kategori (nama_kategori, jenis) VALUES (?,?)',
+        [namaKategori, jenis]
+      );
+      idKategori = hasil.insertId;
     }
 
-    const idKategori = kategori[0].id_kategori;
     await db.query(
       `UPDATE transaksi 
        SET id_kategori=?, tanggal=?, jumlah=?, keterangan=?

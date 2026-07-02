@@ -1,25 +1,14 @@
 const express = require('express');
-const app = express();
+const router = express.Router();
 
-app.use(express.json());
-app.use(express.urlencoded({
-    extended:true
-}));
+const authRoutes = require('./auth');
+const transaksiRoutes = require('./transaksi');
+const kategoriRoutes = require('./kategori');
+const dashboardRoutes = require('./dashboard');
 
+router.use('/auth', authRoutes);
+router.use('/transaksi', transaksiRoutes);
+router.use('/kategori', kategoriRoutes);
+router.use('/dashboard', dashboardRoutes);
 
-const authRoutes = require('./routes/auth');
-
-app.use('/api/auth', authRoutes);
-
-const transaksiRoutes = require('./src/routes/transaksi');
-const kategoriRoutes = require('./src/routes/kategori');
-
-app.use('/api/transaksi', transaksiRoutes);
-app.use('/api/kategori', kategoriRoutes);
-
-
-app.listen(3000,()=>{
-    console.log(
-        "Server running http://localhost:3000"
-    );
-});
+module.exports = router;
