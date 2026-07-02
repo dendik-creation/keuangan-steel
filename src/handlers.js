@@ -207,44 +207,62 @@ exports.tambahTransaksi = async (req, res) => {
 
 exports.editTransaksi = async (req, res) => {
   const { id } = req.params;
-  // DIUBAH: Menangkap id_kategori, bukan jenis
-  const { id_kategori, tanggal, jumlah, keterangan } = req.body;
+  const { jenis, tanggal, jumlah, keterangan } = req.body;
   const userId = req.session.userId;
-  
+
   if (!userId) {
-    return res.status(401).json({ error: 'Harus login terlebih dahulu' });
+    return res.status(401).json({
+      error: "Harus login terlebih dahulu"
+    });
   }
-  
-  // DIUBAH: Validasi mengecek id_kategori
-  if (!id_kategori || !tanggal || !jumlah) {
-    return res.status(400).json({ error: 'Kategori, tanggal, dan jumlah harus diisi' });
+
+  if (!jenis || !tanggal || !jumlah) {
+    return res.status(400).json({
+      error: "Jenis, tanggal, dan jumlah harus diisi"
+    });
   }
-  
-  if (jumlah <= 0) {
-    return res.status(400).json({ error: 'Jumlah harus lebih dari 0' });
-  }
-  
+
   try {
-    const [transaksi] = await db.query(
-      'SELECT id_transaksi AS id FROM transaksi WHERE id_transaksi = ? AND id_user = ?', 
-      [id, userId]
+
+    // cari kategori berdasarkan jenis
+    const [kategori] = await db.query(
+      "SELECT id_kategori FROM kategori WHERE jenis = ? LIMIT 1",
+      [jenis]
     );
-    
-    if (transaksi.length === 0) {
-      return res.status(403).json({ error: 'Transaksi tidak ditemukan' });
+
+    if(kategori.length === 0){
+      return res.status(400).json({
+        error:"Kategori tidak ditemukan"
+      });
     }
-    
-    // DIUBAH: Menggunakan id_kategori untuk UPDATE
+
+    const idKategori = kategori[0].id_kategori;
     await db.query(
-      'UPDATE transaksi SET id_kategori = ?, tanggal = ?, jumlah = ?, keterangan = ? WHERE id_transaksi = ?',
-      [id_kategori, tanggal, jumlah, keterangan, id]
+      `UPDATE transaksi 
+       SET id_kategori=?, tanggal=?, jumlah=?, keterangan=?
+       WHERE id_transaksi=? AND id_user=?`,
+       [
+        idKategori,
+        tanggal,
+        jumlah,
+        keterangan,
+        id,
+        userId
+       ]
     );
-    
-    res.json({ message: 'Transaksi berhasil diperbarui' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Kesalahan server internal' });
+
+    res.json({
+      message:"Transaksi berhasil diperbarui"
+    });
+
+  } catch(err){
+
+    console.log(err);
+    res.status(500).json({
+      error:"Kesalahan server internal"
+    });
   }
+
 };
 
 exports.hapusTransaksi = async (req, res) => {
